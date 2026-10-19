@@ -1,0 +1,35 @@
+services:
+  # ==========================================
+  # 1. ReadFlow.ai FastAPI Backend Web Service
+  # ==========================================
+  - type: web
+    name: readflow-backend
+    runtime: python
+    rootDir: backend
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: GEMINI_API_KEY
+        sync: false
+
+  # ==========================================
+  # 2. ReadFlow.ai Next.js Frontend Web Service
+  # ==========================================
+  - type: web
+    name: readflow-frontend
+    runtime: node
+    rootDir: frontend
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: NEXT_PUBLIC_API_URL
+        sync: false # Set to your deployed backend URL: https://readflow-backend.onrender.com

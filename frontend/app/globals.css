@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+:root {
+  /* Cartoony & Soft Pastel Theme Exact Palette */
+  --pastel-base: #FCE2DB;
+  --pastel-card: #F1C6D3;
+  --pastel-border: #E4A3D4;
+  --pastel-primary: #C295D8;
+  --pastel-primary-hover: #B584CD;
+  --pastel-primary-shadow: #9E6CB7;
+  
+  /* Text & Deep Contrast Colors */
+  --text-main: #3D2347;
+  --text-muted: #6E497A;
+  --text-light: #9469A3;
+  --white-card: #FFFFFF;
+}
+
+body {
+  background-color: var(--pastel-base);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars in Pastel Style */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FCE2DB;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #E4A3D4;
+  border-radius: 8px;
+  border: 2px solid #FCE2DB;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C295D8;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #E4A3D4 #FCE2DB;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(252, 226, 219, 0.6);
+  border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #E4A3D4;
+  border-radius: 8px;
+  border: 1px solid rgba(252, 226, 219, 0.8);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #C295D8;
+}
+
+/* Scanslated-Style Clean Document Styling */
+.scanslated-doc {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.scanslated-heading {
+  font-weight: 800;
+  color: #0F766E;
+  text-decoration: underline;
+  text-decoration-color: #2DD4BF;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* Prominently Underlined Interactive Term Highlights */
+.scanslated-term-teal,
+.scanslated-term-underlined-teal {
+  border-bottom: 2.5px solid #0D9488;
+  background-color: rgba(45, 212, 191, 0.16);
+  color: #0F766E;
+  border-radius: 0.25rem 0.25rem 0 0;
+  padding: 0.05rem 0.35rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 1.5px;
+  text-decoration: underline;
+  text-decoration-color: #0D9488;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: all 0.15s ease-in-out;
+}
+
+.scanslated-term-teal:hover,
+.scanslated-term-underlined-teal:hover {
+  background-color: rgba(45, 212, 191, 0.32);
+  color: #042F2E;
+  text-decoration-thickness: 2.5px;
+  transform: translateY(-1px);
+}
+
+.scanslated-term-purple,
+.scanslated-term-underlined-purple {
+  border-bottom: 2.5px solid #9333EA;
+  background-color: rgba(192, 132, 252, 0.16);
+  color: #6B21A8;
+  border-radius: 0.25rem 0.25rem 0 0;
+  padding: 0.05rem 0.35rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 1.5px;
+  text-decoration: underline;
+  text-decoration-color: #9333EA;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: all 0.15s ease-in-out;
+}
+
+.scanslated-term-purple:hover,
+.scanslated-term-underlined-purple:hover {
+  background-color: rgba(192, 132, 252, 0.32);
+  color: #3B0764;
+  text-decoration-thickness: 2.5px;
+  transform: translateY(-1px);
+}
+
+.scanslated-term-active {
+  background-color: #0D9488 !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  border-bottom: 2.5px solid #042F2E !important;
+  border-radius: 0.35rem;
+  padding: 0.15rem 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0 2px;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.45);
+  transform: scale(1.03);
+  text-decoration: none !important;
+}
+
+/* Scanslated Dark Indigo Popup Card */
+.scanslated-card {
+  background-color: #312B6B;
+  color: #FFFFFF;
+  border-radius: 1.5rem;
+  box-shadow: 0 14px 40px rgba(49, 43, 107, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Pastel Button */
+.pastel-btn {
+  background-color: var(--pastel-primary);
+  color: #FFFFFF;
+  border: 2px solid #B07EC7;
+  border-radius: 1rem;
+  font-weight: 700;
+  box-shadow: 0 4px 0 var(--pastel-primary-shadow);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pastel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--pastel-primary-shadow);
+  background-color: var(--pastel-primary-hover);
+}
+
+.pastel-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--pastel-primary-shadow);
+}

@@ -1,0 +1,29 @@
+# Environments & Dependencies
+.env
+.env*
+**/.env
+**/.env*
+*.env
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Next.js & Vercel
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# Uploads & Caches
+backend/uploads/*.pdf
+backend/uploads/cache/*
+!backend/uploads/cache/.gitkeep
+
+# IDE & OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
