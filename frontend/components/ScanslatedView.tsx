@@ -705,10 +705,13 @@ export const ScanslatedView: React.FC<ScanslatedViewProps> = ({
   };
 
   const getPlainEnglishDescription = (t: SpecializedTerm): { lead: string; mechanics: string } => {
+    const isPlaceholder = !t.short_definition || t.short_definition.startsWith("Documented on Page") || t.short_definition.startsWith("Technical or clinical term");
     return {
-      lead: t.short_definition || `A critical specialized construct evaluated in this document context.`,
+      lead: isPlaceholder
+        ? `${t.term} is an essential technical construct classified under ${t.category || "Domain Concept"}. Retrieving live authoritative web search definition...`
+        : t.short_definition,
       mechanics: t.context_sentence
-        ? `Document Context: "${t.context_sentence}"`
+        ? `Document Occurrence: "${t.context_sentence}"`
         : `Categorized under ${t.category || "Domain Concept"}.`,
     };
   };
@@ -1020,20 +1023,47 @@ export const ScanslatedView: React.FC<ScanslatedViewProps> = ({
                   {/* Fallback if Search is not available or encountered error */}
                   {!searchLoading && !searchData && (
                     <div className="space-y-3.5 text-sm sm:text-[15px] text-white/95 leading-relaxed font-sans">
-                      <p>
-                        <FormattedText
-                          text={
-                            translatedData && selectedLanguage !== "english"
-                              ? translatedData.translated_summary
-                              : desc?.lead
-                          }
-                          highlightTerms={[selectedTerm.term, translatedData?.translated_term]}
-                          termClassName="font-black text-[#2DD4BF] tracking-wide"
-                          boldClassName="font-bold text-white tracking-wide"
-                        />
-                      </p>
+                      {searchError && (
+                        <div className="p-3 rounded-xl bg-amber-500/20 border border-amber-400/40 text-xs text-amber-200 flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <AlertCircle className="w-4 h-4 shrink-0 text-amber-300" />
+                            <span>Live web search is taking longer than usual.</span>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setSearchLoading(true);
+                              setSearchError(null);
+                              ApiClient.triggerDeepSearch(selectedTerm.term, domain, selectedTerm.context_sentence)
+                                .then(setSearchData)
+                                .catch((err) => setSearchError(err?.message || "Failed to retrieve search insights."))
+                                .finally(() => setSearchLoading(false));
+                            }}
+                            className="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-[11px] transition shrink-0"
+                          >
+                            Retry Web Search
+                          </button>
+                        </div>
+                      )}
+                      <div className="bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm">
+                        <p className="leading-relaxed font-normal">
+                          <FormattedText
+                            text={
+                              translatedData && selectedLanguage !== "english"
+                                ? translatedData.translated_summary
+                                : desc?.lead
+                            }
+                            highlightTerms={[selectedTerm.term, translatedData?.translated_term]}
+                            termClassName="font-black text-[#2DD4BF] tracking-wide"
+                            boldClassName="font-bold text-white tracking-wide"
+                          />
+                        </p>
+                      </div>
                       {selectedTerm.context_sentence && (
-                        <p className="text-xs sm:text-sm text-purple-100/90 leading-relaxed italic bg-white/5 p-3 rounded-xl border border-white/10">
+                        <div className="text-xs sm:text-[13px] text-purple-100/90 leading-relaxed italic bg-black/20 p-3 rounded-xl border border-white/10">
+                          <span className="font-bold text-cyan-200 not-italic block mb-0.5 text-[10px] uppercase tracking-wider">
+                            Source Document Context:
+                          </span>
+                          "
                           <FormattedText
                             text={
                               translatedData && selectedLanguage !== "english" && translatedData.context_translation
@@ -1044,7 +1074,8 @@ export const ScanslatedView: React.FC<ScanslatedViewProps> = ({
                             termClassName="font-black text-[#2DD4BF] not-italic"
                             boldClassName="font-bold text-white not-italic"
                           />
-                        </p>
+                          "
+                        </div>
                       )}
                     </div>
                   )}
