@@ -21,6 +21,7 @@ import {
   VisualGenerateResponse,
 } from "@/lib/types";
 import { ApiClient } from "@/lib/api";
+import { FormattedText } from "@/lib/formatText";
 
 interface DetailDrawerProps {
   term: SpecializedTerm | null;
@@ -177,7 +178,12 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({
               Concise Definition
             </h3>
             <p className="text-sm text-[#3D2347] leading-relaxed font-normal">
-              {term.short_definition}
+              <FormattedText
+                text={term.short_definition}
+                highlightTerms={[term.term]}
+                termClassName="font-black text-[#7C3AED]"
+                boldClassName="font-bold text-[#3D2347]"
+              />
             </p>
 
             {/* Formula Display if Available */}
@@ -203,7 +209,14 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({
                 </h3>
               </div>
               <p className="text-xs text-[#3D2347] italic font-serif leading-relaxed">
-                "{term.context_sentence}"
+                "
+                <FormattedText
+                  text={term.context_sentence}
+                  highlightTerms={[term.term]}
+                  termClassName="font-black text-[#7C3AED] not-italic"
+                  boldClassName="font-bold text-[#3D2347] not-italic"
+                />
+                "
               </p>
             </div>
           )}
@@ -251,7 +264,12 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({
                     Academic Grounding Summary
                   </span>
                   <div className="text-xs text-[#3D2347] leading-relaxed whitespace-pre-line">
-                    {searchData.summary}
+                    <FormattedText
+                      text={searchData.summary}
+                      highlightTerms={[term.term]}
+                      termClassName="font-black text-[#7C3AED]"
+                      boldClassName="font-bold text-[#3D2347]"
+                    />
                   </div>
                 </div>
 
@@ -267,7 +285,14 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({
                           className="text-xs text-[#3D2347] flex items-start gap-2 bg-[#F1C6D3]/30 p-2 rounded-xl"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5 text-[#C295D8] shrink-0 mt-0.5" />
-                          <span>{f}</span>
+                          <span>
+                            <FormattedText
+                              text={f}
+                              highlightTerms={[term.term]}
+                              termClassName="font-black text-[#7C3AED]"
+                              boldClassName="font-bold text-[#3D2347]"
+                            />
+                          </span>
                         </li>
                       ))}
                     </ul>

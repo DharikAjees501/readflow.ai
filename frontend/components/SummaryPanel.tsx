@@ -13,6 +13,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { DocumentSummary, SpecializedTerm } from "@/lib/types";
+import { FormattedText } from "@/lib/formatText";
 
 interface SummaryPanelProps {
   summary: DocumentSummary | null;
@@ -248,7 +249,12 @@ export const SummaryPanel: React.FC<SummaryPanelProps> = ({
                   </div>
 
                   <p className="text-[11px] text-[#6E497A] mt-1.5 line-clamp-2">
-                    {term.short_definition}
+                    <FormattedText
+                      text={term.short_definition}
+                      highlightTerms={[term.term]}
+                      termClassName="font-black text-[#6E497A]"
+                      boldClassName="font-bold text-[#6E497A]"
+                    />
                   </p>
 
                   <div className="mt-2 pt-1.5 border-t border-[#E4A3D4]/50 flex items-center justify-between">

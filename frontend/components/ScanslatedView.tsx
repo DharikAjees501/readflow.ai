@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { PageInfo, SpecializedTerm, DeepSearchResponse, VisualGenerateResponse, TranslationResponse } from "@/lib/types";
 import { ApiClient } from "@/lib/api";
+import { FormattedText } from "@/lib/formatText";
 import nlp from "compromise";
 
 interface ScanslatedViewProps {
@@ -922,9 +923,16 @@ export const ScanslatedView: React.FC<ScanslatedViewProps> = ({
                     <div className="space-y-3.5">
                       <div className="text-sm sm:text-[14.5px] text-white/95 leading-relaxed font-sans bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm">
                         <p className="leading-relaxed font-normal">
-                          {translatedData && selectedLanguage !== "english"
-                            ? translatedData.translated_summary
-                            : searchData.summary}
+                          <FormattedText
+                            text={
+                              translatedData && selectedLanguage !== "english"
+                                ? translatedData.translated_summary
+                                : searchData.summary
+                            }
+                            highlightTerms={[selectedTerm.term, translatedData?.translated_term]}
+                            termClassName="font-black text-[#2DD4BF] tracking-wide"
+                            boldClassName="font-bold text-white tracking-wide"
+                          />
                         </p>
                       </div>
 
@@ -934,9 +942,18 @@ export const ScanslatedView: React.FC<ScanslatedViewProps> = ({
                           <span className="font-bold text-cyan-200 not-italic block mb-0.5 text-[10px] uppercase tracking-wider">
                             Source Document Context:
                           </span>
-                          "{translatedData && selectedLanguage !== "english" && translatedData.context_translation
-                            ? translatedData.context_translation
-                            : selectedTerm.context_sentence}"
+                          "
+                          <FormattedText
+                            text={
+                              translatedData && selectedLanguage !== "english" && translatedData.context_translation
+                                ? translatedData.context_translation
+                                : selectedTerm.context_sentence
+                            }
+                            highlightTerms={[selectedTerm.term, translatedData?.translated_term]}
+                            termClassName="font-black text-[#2DD4BF] not-italic"
+                            boldClassName="font-bold text-white not-italic"
+                          />
+                          "
                         </div>
                       )}
 
@@ -961,7 +978,14 @@ export const ScanslatedView: React.FC<ScanslatedViewProps> = ({
                             ).map((finding, fIdx) => (
                               <li key={fIdx} className="flex items-start gap-2">
                                 <span className="text-[#2DD4BF] font-black mt-0.5">•</span>
-                                <span className="leading-relaxed">{finding}</span>
+                                <span className="leading-relaxed">
+                                  <FormattedText
+                                    text={finding}
+                                    highlightTerms={[selectedTerm.term, translatedData?.translated_term]}
+                                    termClassName="font-black text-[#2DD4BF]"
+                                    boldClassName="font-bold text-white"
+                                  />
+                                </span>
                               </li>
                             ))}
                           </ul>
@@ -997,15 +1021,29 @@ export const ScanslatedView: React.FC<ScanslatedViewProps> = ({
                   {!searchLoading && !searchData && (
                     <div className="space-y-3.5 text-sm sm:text-[15px] text-white/95 leading-relaxed font-sans">
                       <p>
-                        {translatedData && selectedLanguage !== "english"
-                          ? translatedData.translated_summary
-                          : desc?.lead}
+                        <FormattedText
+                          text={
+                            translatedData && selectedLanguage !== "english"
+                              ? translatedData.translated_summary
+                              : desc?.lead
+                          }
+                          highlightTerms={[selectedTerm.term, translatedData?.translated_term]}
+                          termClassName="font-black text-[#2DD4BF] tracking-wide"
+                          boldClassName="font-bold text-white tracking-wide"
+                        />
                       </p>
                       {selectedTerm.context_sentence && (
                         <p className="text-xs sm:text-sm text-purple-100/90 leading-relaxed italic bg-white/5 p-3 rounded-xl border border-white/10">
-                          {translatedData && selectedLanguage !== "english" && translatedData.context_translation
-                            ? translatedData.context_translation
-                            : desc?.mechanics}
+                          <FormattedText
+                            text={
+                              translatedData && selectedLanguage !== "english" && translatedData.context_translation
+                                ? translatedData.context_translation
+                                : desc?.mechanics
+                            }
+                            highlightTerms={[selectedTerm.term, translatedData?.translated_term]}
+                            termClassName="font-black text-[#2DD4BF] not-italic"
+                            boldClassName="font-bold text-white not-italic"
+                          />
                         </p>
                       )}
                     </div>
